@@ -49,7 +49,7 @@ pub const RULE_csvFile: usize = 0;
 pub const RULE_hdr: usize = 1;
 pub const RULE_row: usize = 2;
 pub const RULE_field: usize = 3;
-pub const ruleNames: [&'static str; 4] = ["csvFile", "hdr", "row", "field"];
+pub const ruleNames: [&str; 4] = ["csvFile", "hdr", "row", "field"];
 
 pub const _LITERAL_NAMES: [Option<&'static str>; 4] =
     [None, Some("','"), Some("'\r'"), Some("'\n'")];
@@ -214,7 +214,7 @@ pub struct CSVParserExt<'input> {
     _pd: PhantomData<&'input str>,
 }
 
-impl<'input> CSVParserExt<'input> {}
+impl CSVParserExt<'_> {}
 antlr_rust::tid! { CSVParserExt<'a> }
 
 impl<'input> TokenAware<'input> for CSVParserExt<'input> {
@@ -767,7 +767,7 @@ lazy_static! {
     };
 }
 
-const _serializedATN: &'static str =
+const _serializedATN: &str =
     "\x03\u{608b}\u{a72a}\u{8133}\u{b9ed}\u{417c}\u{3be7}\u{7786}\u{5964}\x03\
 	\x08\x25\x04\x02\x09\x02\x04\x03\x09\x03\x04\x04\x09\x04\x04\x05\x09\x05\
 	\x03\x02\x03\x02\x06\x02\x0d\x0a\x02\x0d\x02\x0e\x02\x0e\x03\x03\x03\x03\

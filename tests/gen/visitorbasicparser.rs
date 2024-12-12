@@ -41,7 +41,7 @@ use std::sync::Arc;
 
 pub const A: isize = 1;
 pub const RULE_s: usize = 0;
-pub const ruleNames: [&'static str; 1] = ["s"];
+pub const ruleNames: [&str; 1] = ["s"];
 
 pub const _LITERAL_NAMES: [Option<&'static str>; 2] = [None, Some("'A'")];
 pub const _SYMBOLIC_NAMES: [Option<&'static str>; 2] = [None, Some("A")];
@@ -207,7 +207,7 @@ pub struct VisitorBasicParserExt<'input> {
     _pd: PhantomData<&'input str>,
 }
 
-impl<'input> VisitorBasicParserExt<'input> {}
+impl VisitorBasicParserExt<'_> {}
 antlr_rust::tid! { VisitorBasicParserExt<'a> }
 
 impl<'input> TokenAware<'input> for VisitorBasicParserExt<'input> {
@@ -360,7 +360,7 @@ lazy_static! {
     };
 }
 
-const _serializedATN: &'static str =
+const _serializedATN: &str =
     "\x03\u{608b}\u{a72a}\u{8133}\u{b9ed}\u{417c}\u{3be7}\u{7786}\u{5964}\x03\
 	\x03\x08\x04\x02\x09\x02\x03\x02\x03\x02\x03\x02\x03\x02\x02\x02\x03\x02\
 	\x02\x02\x02\x06\x02\x04\x03\x02\x02\x02\x04\x05\x07\x03\x02\x02\x05\x06\

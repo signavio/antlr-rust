@@ -48,7 +48,7 @@ pub const INT: isize = 8;
 pub const WS: isize = 9;
 pub const RULE_s: usize = 0;
 pub const RULE_e: usize = 1;
-pub const ruleNames: [&'static str; 2] = ["s", "e"];
+pub const ruleNames: [&str; 2] = ["s", "e"];
 
 pub const _LITERAL_NAMES: [Option<&'static str>; 7] = [
     None,
@@ -212,7 +212,7 @@ pub struct LabelsParserExt<'input> {
     _pd: PhantomData<&'input str>,
 }
 
-impl<'input> LabelsParserExt<'input> {}
+impl LabelsParserExt<'_> {}
 antlr_rust::tid! { LabelsParserExt<'a> }
 
 impl<'input> TokenAware<'input> for LabelsParserExt<'input> {
@@ -386,7 +386,7 @@ pub enum EContextAll<'input> {
 }
 antlr_rust::tid! {EContextAll<'a>}
 
-impl<'input> antlr_rust::parser_rule_context::DerefSeal for EContextAll<'input> {}
+impl antlr_rust::parser_rule_context::DerefSeal for EContextAll<'_> {}
 
 impl<'input> LabelsParserContext<'input> for EContextAll<'input> {}
 
@@ -425,7 +425,7 @@ pub struct EContextExt<'input> {
 
 impl<'input> LabelsParserContext<'input> for EContext<'input> {}
 
-impl<'input, 'a> Listenable<dyn LabelsListener<'input> + 'a> for EContext<'input> {}
+impl<'input> Listenable<dyn LabelsListener<'input> + '_> for EContext<'input> {}
 
 impl<'input> CustomRuleContext<'input> for EContextExt<'input> {
     type TF = LocalTokenFactory<'input>;
@@ -1438,7 +1438,7 @@ lazy_static! {
     };
 }
 
-const _serializedATN: &'static str =
+const _serializedATN: &str =
     "\x03\u{608b}\u{a72a}\u{8133}\u{b9ed}\u{417c}\u{3be7}\u{7786}\u{5964}\x03\
 	\x0b\x2a\x04\x02\x09\x02\x04\x03\x09\x03\x03\x02\x03\x02\x03\x03\x03\x03\
 	\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x05\x03\

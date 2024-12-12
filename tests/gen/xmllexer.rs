@@ -48,11 +48,11 @@ pub const S: isize = 17;
 pub const PI: isize = 18;
 pub const INSIDE: usize = 1;
 pub const PROC_INSTR: usize = 2;
-pub const channelNames: [&'static str; 0 + 2] = ["DEFAULT_TOKEN_CHANNEL", "HIDDEN"];
+pub const channelNames: [&str; 2] = ["DEFAULT_TOKEN_CHANNEL", "HIDDEN"];
 
-pub const modeNames: [&'static str; 3] = ["DEFAULT_MODE", "INSIDE", "PROC_INSTR"];
+pub const modeNames: [&str; 3] = ["DEFAULT_MODE", "INSIDE", "PROC_INSTR"];
 
-pub const ruleNames: [&'static str; 24] = [
+pub const ruleNames: [&str; 24] = [
     "COMMENT",
     "CDATA",
     "DTD",
@@ -209,10 +209,7 @@ impl<'input, Input: CharStream<From<'input>>>
         action_index: isize,
         recog: &mut BaseLexer<'input, XMLLexerActions, Input, LocalTokenFactory<'input>>,
     ) {
-        match rule_index {
-            10 => XMLLexer::<'input>::CLOSE_action(None, action_index, recog),
-            _ => {}
-        }
+        if rule_index == 10 { XMLLexer::<'input>::CLOSE_action(None, action_index, recog) }
     }
     fn sempred(
         _localctx: Option<&EmptyContext<'input, LocalTokenFactory<'input>>>,
@@ -233,12 +230,8 @@ impl<'input, Input: CharStream<From<'input>>> XMLLexer<'input, Input> {
         action_index: isize,
         recog: &mut <Self as Deref>::Target,
     ) {
-        match action_index {
-            0 => {
-                recog.pop_mode();
-            }
-
-            _ => {}
+        if action_index == 0 {
+            recog.pop_mode();
         }
     }
     fn COMMENT_sempred(
@@ -303,7 +296,7 @@ lazy_static! {
     };
 }
 
-const _serializedATN: &'static str =
+const _serializedATN: &str =
     "\x03\u{608b}\u{a72a}\u{8133}\u{b9ed}\u{417c}\u{3be7}\u{7786}\u{5964}\x02\
 		\x14\u{e8}\x08\x01\x08\x01\x08\x01\x04\x02\x09\x02\x04\x03\x09\x03\x04\
 		\x04\x09\x04\x04\x05\x09\x05\x04\x06\x09\x06\x04\x07\x09\x07\x04\x08\x09\

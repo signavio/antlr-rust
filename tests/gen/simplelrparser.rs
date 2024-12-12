@@ -41,7 +41,7 @@ pub const ID: isize = 1;
 pub const WS: isize = 2;
 pub const RULE_s: usize = 0;
 pub const RULE_a: usize = 1;
-pub const ruleNames: [&'static str; 2] = ["s", "a"];
+pub const ruleNames: [&str; 2] = ["s", "a"];
 
 pub const _LITERAL_NAMES: [Option<&'static str>; 0] = [];
 pub const _SYMBOLIC_NAMES: [Option<&'static str>; 3] = [None, Some("ID"), Some("WS")];
@@ -186,7 +186,7 @@ pub struct SimpleLRParserExt<'input> {
     _pd: PhantomData<&'input str>,
 }
 
-impl<'input> SimpleLRParserExt<'input> {}
+impl SimpleLRParserExt<'_> {}
 antlr_rust::tid! { SimpleLRParserExt<'a> }
 
 impl<'input> TokenAware<'input> for SimpleLRParserExt<'input> {
@@ -501,7 +501,7 @@ lazy_static! {
     };
 }
 
-const _serializedATN: &'static str =
+const _serializedATN: &str =
     "\x03\u{608b}\u{a72a}\u{8133}\u{b9ed}\u{417c}\u{3be7}\u{7786}\u{5964}\x03\
 	\x04\x13\x04\x02\x09\x02\x04\x03\x09\x03\x03\x02\x03\x02\x03\x03\x03\x03\
 	\x03\x03\x03\x03\x03\x03\x07\x03\x0e\x0a\x03\x0c\x03\x0e\x03\x11\x0b\x03\

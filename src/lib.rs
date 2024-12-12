@@ -1,18 +1,6 @@
 #![crate_type = "lib"]
-// #![feature(try_blocks)]
-//#![feature(nll)]
-// #![feature(raw)]
-// #![feature(is_sorted)]
-// #![feature(cell_update)]
-// #![feature(get_mut_unchecked)]
-// #![feature(specialization)]
-// #![feature(coerce_unsized)]
-// #![feature(associated_type_defaults)]
-// #![feature(generic_associated_types)]
-// #![feature(crate_visibility_modifier)]
-// #![feature(generic_associated_types)]
 #![warn(rust_2018_idioms)]
-#![warn(missing_docs)] // warn if there is missing docs
+//#![warn(missing_docs)] // warn if there is missing docs
 #![warn(trivial_numeric_casts)]
 // #![allow(incomplete_features)]
 

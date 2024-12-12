@@ -47,7 +47,7 @@ pub const SUB: isize = 5;
 pub const WS: isize = 6;
 pub const RULE_s: usize = 0;
 pub const RULE_expr: usize = 1;
-pub const ruleNames: [&'static str; 2] = ["s", "expr"];
+pub const ruleNames: [&str; 2] = ["s", "expr"];
 
 pub const _LITERAL_NAMES: [Option<&'static str>; 6] = [
     None,
@@ -221,7 +221,7 @@ pub struct VisitorCalcParserExt<'input> {
     _pd: PhantomData<&'input str>,
 }
 
-impl<'input> VisitorCalcParserExt<'input> {}
+impl VisitorCalcParserExt<'_> {}
 antlr_rust::tid! { VisitorCalcParserExt<'a> }
 
 impl<'input> TokenAware<'input> for VisitorCalcParserExt<'input> {
@@ -402,7 +402,7 @@ pub enum ExprContextAll<'input> {
 }
 antlr_rust::tid! {ExprContextAll<'a>}
 
-impl<'input> antlr_rust::parser_rule_context::DerefSeal for ExprContextAll<'input> {}
+impl antlr_rust::parser_rule_context::DerefSeal for ExprContextAll<'_> {}
 
 impl<'input> VisitorCalcParserContext<'input> for ExprContextAll<'input> {}
 
@@ -441,9 +441,9 @@ pub struct ExprContextExt<'input> {
 
 impl<'input> VisitorCalcParserContext<'input> for ExprContext<'input> {}
 
-impl<'input, 'a> Listenable<dyn VisitorCalcListener<'input> + 'a> for ExprContext<'input> {}
+impl<'input> Listenable<dyn VisitorCalcListener<'input> + '_> for ExprContext<'input> {}
 
-impl<'input, 'a> Visitable<dyn VisitorCalcVisitor<'input> + 'a> for ExprContext<'input> {}
+impl<'input> Visitable<dyn VisitorCalcVisitor<'input> + '_> for ExprContext<'input> {}
 
 impl<'input> CustomRuleContext<'input> for ExprContextExt<'input> {
     type TF = LocalTokenFactory<'input>;
@@ -821,7 +821,7 @@ where
                                         }
                                         recog.base.set_state(11);
                                         _la = recog.base.input.la(1);
-                                        if { !(_la == MUL || _la == DIV) } {
+                                        if !(_la == MUL || _la == DIV) {
                                             recog.err_handler.recover_inline(&mut recog.base)?;
                                         } else {
                                             if recog.base.input.la(1) == TOKEN_EOF {
@@ -858,7 +858,7 @@ where
                                         }
                                         recog.base.set_state(14);
                                         _la = recog.base.input.la(1);
-                                        if { !(_la == ADD || _la == SUB) } {
+                                        if !(_la == ADD || _la == SUB) {
                                             recog.err_handler.recover_inline(&mut recog.base)?;
                                         } else {
                                             if recog.base.input.la(1) == TOKEN_EOF {
@@ -912,7 +912,7 @@ lazy_static! {
     };
 }
 
-const _serializedATN: &'static str =
+const _serializedATN: &str =
     "\x03\u{608b}\u{a72a}\u{8133}\u{b9ed}\u{417c}\u{3be7}\u{7786}\u{5964}\x03\
 	\x08\x18\x04\x02\x09\x02\x04\x03\x09\x03\x03\x02\x03\x02\x03\x02\x03\x03\
 	\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x07\x03\
