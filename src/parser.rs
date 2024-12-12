@@ -23,7 +23,7 @@ use crate::tree::{ErrorNode, Listenable, ParseTreeListener, TerminalNode};
 use crate::utils::cell_update;
 use crate::vocabulary::Vocabulary;
 use crate::{CoerceFrom, CoerceTo};
-use better_any::{Tid, TidAble};
+use better_any::TidAble;
 
 /// parser functionality required for `ParserATNSimulator` to work
 #[allow(missing_docs)] // todo rewrite it so downstream crates actually could meaningfully implement it

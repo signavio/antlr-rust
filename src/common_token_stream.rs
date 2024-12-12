@@ -6,7 +6,6 @@ use crate::token::{Token, TOKEN_DEFAULT_CHANNEL, TOKEN_INVALID_TYPE};
 use crate::token_factory::TokenFactory;
 use crate::token_source::TokenSource;
 use crate::token_stream::{TokenStream, UnbufferedTokenStream};
-use better_any::{Tid, TidAble};
 
 /// Default token stream that skips token that not correspond to current channel.
 #[derive(Debug)]

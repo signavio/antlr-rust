@@ -11,7 +11,7 @@ use crate::parser::ParserNodeType;
 use crate::parser_rule_context::ParserRuleContext;
 use crate::token_factory::TokenFactory;
 use crate::tree::{ParseTree, Tree};
-use better_any::{Tid, TidAble};
+use better_any::TidAble;
 use std::any::type_name;
 
 //pub trait RuleContext:RuleNode {

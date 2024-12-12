@@ -12,7 +12,7 @@ use typed_arena::Arena;
 use crate::char_stream::{CharStream, InputData};
 use crate::token::Token;
 use crate::token::{CommonToken, OwningToken, TOKEN_INVALID_TYPE};
-use better_any::{Tid, TidAble};
+use better_any::TidAble;
 
 lazy_static! {
     pub(crate) static ref COMMON_TOKEN_FACTORY_DEFAULT: Box<CommonTokenFactory> =

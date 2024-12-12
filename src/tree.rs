@@ -8,18 +8,16 @@ use std::marker::PhantomData;
 use std::ops::Deref;
 use std::rc::Rc;
 
-use crate::atn::INVALID_ALT;
 use crate::char_stream::InputData;
 use crate::int_stream::EOF;
 use crate::interval_set::Interval;
 use crate::parser::ParserNodeType;
-use crate::parser_rule_context::{ParserRuleContext, RuleContextExt};
+use crate::parser_rule_context::ParserRuleContext;
 use crate::recognizer::Recognizer;
 use crate::rule_context::{CustomRuleContext, RuleContext};
 use crate::token::Token;
 use crate::token_factory::TokenFactory;
 use crate::{interval_set, trees, CoerceTo};
-use better_any::{Tid, TidAble};
 use std::mem;
 
 //todo try to make in more generic

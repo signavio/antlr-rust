@@ -8,7 +8,6 @@ use crate::int_stream::{IntStream, IterWrapper};
 use crate::token::{OwningToken, Token, TOKEN_EOF, TOKEN_INVALID_TYPE};
 use crate::token_factory::TokenFactory;
 use crate::token_source::TokenSource;
-use better_any::{Tid, TidAble};
 use std::fmt::{Debug, Formatter};
 
 /// An `IntSteam` of `Token`s

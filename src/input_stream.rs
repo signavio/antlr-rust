@@ -5,7 +5,6 @@ use crate::char_stream::{CharStream, InputData};
 use crate::int_stream::IntStream;
 use std::ops::Deref;
 
-use better_any::TidAble;
 
 /// Default rust target input stream.
 ///
