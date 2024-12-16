@@ -37,11 +37,11 @@ pub const T__5: isize = 6;
 pub const ID: isize = 7;
 pub const INT: isize = 8;
 pub const WS: isize = 9;
-pub const channelNames: [&'static str; 0 + 2] = ["DEFAULT_TOKEN_CHANNEL", "HIDDEN"];
+pub const channelNames: [&str; 2] = ["DEFAULT_TOKEN_CHANNEL", "HIDDEN"];
 
-pub const modeNames: [&'static str; 1] = ["DEFAULT_MODE"];
+pub const modeNames: [&str; 1] = ["DEFAULT_MODE"];
 
-pub const ruleNames: [&'static str; 9] = [
+pub const ruleNames: [&str; 9] = [
     "T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "ID", "INT", "WS",
 ];
 
@@ -82,31 +82,44 @@ pub type LocalTokenFactory<'input> = CommonTokenFactory;
 
 type From<'a> = <LocalTokenFactory<'a> as TokenFactory<'a>>::From;
 
-#[derive(Tid)]
 pub struct LabelsLexer<'input, Input: CharStream<From<'input>>> {
     base: BaseLexer<'input, LabelsLexerActions, Input, LocalTokenFactory<'input>>,
 }
 
+antlr_rust::tid! { impl<'input,Input> TidAble<'input> for LabelsLexer<'input,Input> where Input:CharStream<From<'input> > }
+
 impl<'input, Input: CharStream<From<'input>>> Deref for LabelsLexer<'input, Input> {
     type Target = BaseLexer<'input, LabelsLexerActions, Input, LocalTokenFactory<'input>>;
 
-    fn deref(&self) -> &Self::Target { &self.base }
+    fn deref(&self) -> &Self::Target {
+        &self.base
+    }
 }
 
 impl<'input, Input: CharStream<From<'input>>> DerefMut for LabelsLexer<'input, Input> {
-    fn deref_mut(&mut self) -> &mut Self::Target { &mut self.base }
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.base
+    }
 }
 
 impl<'input, Input: CharStream<From<'input>>> LabelsLexer<'input, Input> {
-    fn get_rule_names(&self) -> &'static [&'static str] { &ruleNames }
-    fn get_literal_names(&self) -> &[Option<&str>] { &_LITERAL_NAMES }
+    fn get_rule_names(&self) -> &'static [&'static str] {
+        &ruleNames
+    }
+    fn get_literal_names(&self) -> &[Option<&str>] {
+        &_LITERAL_NAMES
+    }
 
-    fn get_symbolic_names(&self) -> &[Option<&str>] { &_SYMBOLIC_NAMES }
+    fn get_symbolic_names(&self) -> &[Option<&str>] {
+        &_SYMBOLIC_NAMES
+    }
 
-    fn get_grammar_file_name(&self) -> &'static str { "LabelsLexer.g4" }
+    fn get_grammar_file_name(&self) -> &'static str {
+        "LabelsLexer.g4"
+    }
 
     pub fn new_with_token_factory(input: Input, tf: &'input LocalTokenFactory<'input>) -> Self {
-        antlr_rust::recognizer::check_version("0", "2");
+        antlr_rust::recognizer::check_version("0", "3");
         Self {
             base: BaseLexer::new_base_lexer(
                 input,
@@ -158,17 +171,29 @@ impl<'input> TokenAware<'input> for LabelsLexerActions {
 impl<'input, Input: CharStream<From<'input>>> TokenSource<'input> for LabelsLexer<'input, Input> {
     type TF = LocalTokenFactory<'input>;
 
-    fn next_token(&mut self) -> <Self::TF as TokenFactory<'input>>::Tok { self.base.next_token() }
+    fn next_token(&mut self) -> <Self::TF as TokenFactory<'input>>::Tok {
+        self.base.next_token()
+    }
 
-    fn get_line(&self) -> isize { self.base.get_line() }
+    fn get_line(&self) -> isize {
+        self.base.get_line()
+    }
 
-    fn get_char_position_in_line(&self) -> isize { self.base.get_char_position_in_line() }
+    fn get_char_position_in_line(&self) -> isize {
+        self.base.get_char_position_in_line()
+    }
 
-    fn get_input_stream(&mut self) -> Option<&mut dyn IntStream> { self.base.get_input_stream() }
+    fn get_input_stream(&mut self) -> Option<&mut dyn IntStream> {
+        self.base.get_input_stream()
+    }
 
-    fn get_source_name(&self) -> String { self.base.get_source_name() }
+    fn get_source_name(&self) -> String {
+        self.base.get_source_name()
+    }
 
-    fn get_token_factory(&self) -> &'input Self::TF { self.base.get_token_factory() }
+    fn get_token_factory(&self) -> &'input Self::TF {
+        self.base.get_token_factory()
+    }
 }
 
 lazy_static! {
@@ -184,7 +209,7 @@ lazy_static! {
     };
 }
 
-const _serializedATN: &'static str =
+const _serializedATN: &str =
     "\x03\u{608b}\u{a72a}\u{8133}\u{b9ed}\u{417c}\u{3be7}\u{7786}\u{5964}\x02\
 		\x0b\x31\x08\x01\x04\x02\x09\x02\x04\x03\x09\x03\x04\x04\x09\x04\x04\x05\
 		\x09\x05\x04\x06\x09\x06\x04\x07\x09\x07\x04\x08\x09\x08\x04\x09\x09\x09\

@@ -5,6 +5,7 @@
 #![allow(nonstandard_style)]
 #![allow(unused_imports)]
 #![allow(unused_mut)]
+#![allow(unused_braces)]
 use super::referencetoatnlistener::*;
 use antlr_rust::atn::{ATN, INVALID_ALT};
 use antlr_rust::atn_deserializer::ATNDeserializer;
@@ -40,7 +41,7 @@ pub const ID: isize = 1;
 pub const ATN: isize = 2;
 pub const WS: isize = 3;
 pub const RULE_a: usize = 0;
-pub const ruleNames: [&'static str; 1] = ["a"];
+pub const ruleNames: [&str; 1] = ["a"];
 
 pub const _LITERAL_NAMES: [Option<&'static str>; 0] = [];
 pub const _SYMBOLIC_NAMES: [Option<&'static str>; 4] = [None, Some("ID"), Some("ATN"), Some("WS")];
@@ -56,7 +57,7 @@ lazy_static! {
 
 type BaseParserType<'input, I> = BaseParser<
     'input,
-    ReferenceToATNParserExt,
+    ReferenceToATNParserExt<'input>,
     I,
     ReferenceToATNParserContextType,
     dyn ReferenceToATNListener<'input> + 'input,
@@ -90,12 +91,16 @@ where
     I: TokenStream<'input, TF = LocalTokenFactory<'input>> + TidAble<'input>,
     H: ErrorStrategy<'input, BaseParserType<'input, I>>,
 {
-    pub fn get_serialized_atn() -> &'static str { _serializedATN }
+    pub fn get_serialized_atn() -> &'static str {
+        _serializedATN
+    }
 
-    pub fn set_error_strategy(&mut self, strategy: H) { self.err_handler = strategy }
+    pub fn set_error_strategy(&mut self, strategy: H) {
+        self.err_handler = strategy
+    }
 
     pub fn with_strategy(input: I, strategy: H) -> Self {
-        antlr_rust::recognizer::check_version("0", "2");
+        antlr_rust::recognizer::check_version("0", "3");
         let interpreter = Arc::new(ParserATNSimulator::new(
             _ATN.clone(),
             _decision_to_DFA.clone(),
@@ -105,7 +110,9 @@ where
             base: BaseParser::new_base_parser(
                 input,
                 Arc::clone(&interpreter),
-                ReferenceToATNParserExt {},
+                ReferenceToATNParserExt {
+                    _pd: Default::default(),
+                },
             ),
             interpreter,
             _shared_context_cache: Box::new(PredictionContextCache::new()),
@@ -130,7 +137,9 @@ impl<'input, I>
 where
     I: TokenStream<'input, TF = LocalTokenFactory<'input>> + TidAble<'input>,
 {
-    pub fn new(input: I) -> Self { Self::with_strategy(input, DefaultErrorStrategy::new()) }
+    pub fn new(input: I) -> Self {
+        Self::with_strategy(input, DefaultErrorStrategy::new())
+    }
 }
 
 /// Trait for monomorphized trait object that corresponds to the nodes of parse tree generated for ReferenceToATNParser
@@ -138,6 +147,8 @@ pub trait ReferenceToATNParserContext<'input>: for<'x> Listenable<dyn ReferenceT
     + ParserRuleContext<'input, TF = LocalTokenFactory<'input>, Ctx = ReferenceToATNParserContextType>
 {
 }
+
+antlr_rust::coerce_from! { 'input : ReferenceToATNParserContext<'input> }
 
 impl<'input> ReferenceToATNParserContext<'input>
     for TerminalNode<'input, ReferenceToATNParserContextType>
@@ -148,14 +159,12 @@ impl<'input> ReferenceToATNParserContext<'input>
 {
 }
 
-#[antlr_rust::impl_tid]
-impl<'input> antlr_rust::TidAble<'input> for dyn ReferenceToATNParserContext<'input> + 'input {}
+antlr_rust::tid! { impl<'input> TidAble<'input> for dyn ReferenceToATNParserContext<'input> + 'input }
 
-#[antlr_rust::impl_tid]
-impl<'input> antlr_rust::TidAble<'input> for dyn ReferenceToATNListener<'input> + 'input {}
+antlr_rust::tid! { impl<'input> TidAble<'input> for dyn ReferenceToATNListener<'input> + 'input }
 
 pub struct ReferenceToATNParserContextType;
-antlr_rust::type_id! {ReferenceToATNParserContextType}
+antlr_rust::tid! {ReferenceToATNParserContextType}
 
 impl<'input> ParserNodeType<'input> for ReferenceToATNParserContextType {
     type TF = LocalTokenFactory<'input>;
@@ -169,7 +178,9 @@ where
 {
     type Target = BaseParserType<'input, I>;
 
-    fn deref(&self) -> &Self::Target { &self.base }
+    fn deref(&self) -> &Self::Target {
+        &self.base
+    }
 }
 
 impl<'input, I, H> DerefMut for ReferenceToATNParser<'input, I, H>
@@ -177,30 +188,41 @@ where
     I: TokenStream<'input, TF = LocalTokenFactory<'input>> + TidAble<'input>,
     H: ErrorStrategy<'input, BaseParserType<'input, I>>,
 {
-    fn deref_mut(&mut self) -> &mut Self::Target { &mut self.base }
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.base
+    }
 }
 
-pub struct ReferenceToATNParserExt {}
+pub struct ReferenceToATNParserExt<'input> {
+    _pd: PhantomData<&'input str>,
+}
 
-impl ReferenceToATNParserExt {}
+impl ReferenceToATNParserExt<'_> {}
+antlr_rust::tid! { ReferenceToATNParserExt<'a> }
 
-impl<'input> TokenAware<'input> for ReferenceToATNParserExt {
+impl<'input> TokenAware<'input> for ReferenceToATNParserExt<'input> {
     type TF = LocalTokenFactory<'input>;
 }
 
 impl<'input, I: TokenStream<'input, TF = LocalTokenFactory<'input>> + TidAble<'input>>
-    ParserRecog<'input, BaseParserType<'input, I>> for ReferenceToATNParserExt
+    ParserRecog<'input, BaseParserType<'input, I>> for ReferenceToATNParserExt<'input>
 {
 }
 
 impl<'input, I: TokenStream<'input, TF = LocalTokenFactory<'input>> + TidAble<'input>>
-    Actions<'input, BaseParserType<'input, I>> for ReferenceToATNParserExt
+    Actions<'input, BaseParserType<'input, I>> for ReferenceToATNParserExt<'input>
 {
-    fn get_grammar_file_name(&self) -> &str { "ReferenceToATN.g4" }
+    fn get_grammar_file_name(&self) -> &str {
+        "ReferenceToATN.g4"
+    }
 
-    fn get_rule_names(&self) -> &[&str] { &ruleNames }
+    fn get_rule_names(&self) -> &[&str] {
+        &ruleNames
+    }
 
-    fn get_vocabulary(&self) -> &dyn Vocabulary { &**VOCABULARY }
+    fn get_vocabulary(&self) -> &dyn Vocabulary {
+        &**VOCABULARY
+    }
 }
 //------------------- a ----------------
 pub type AContextAll<'input> = AContext<'input>;
@@ -219,15 +241,21 @@ impl<'input, 'a> Listenable<dyn ReferenceToATNListener<'input> + 'a> for AContex
         listener.enter_every_rule(self);
         listener.enter_a(self);
     }
+    fn exit(&self, listener: &mut (dyn ReferenceToATNListener<'input> + 'a)) {
+        listener.exit_a(self);
+        listener.exit_every_rule(self);
+    }
 }
 
 impl<'input> CustomRuleContext<'input> for AContextExt<'input> {
     type TF = LocalTokenFactory<'input>;
     type Ctx = ReferenceToATNParserContextType;
-    fn get_rule_index(&self) -> usize { RULE_a }
+    fn get_rule_index(&self) -> usize {
+        RULE_a
+    }
     //fn type_rule_index() -> usize where Self: Sized { RULE_a }
 }
-antlr_rust::type_id! {AContextExt<'a>}
+antlr_rust::tid! {AContextExt<'a>}
 
 impl<'input> AContextExt<'input> {
     fn new(
@@ -290,8 +318,8 @@ where
         let mut _localctx = AContextExt::new(_parentctx.clone(), recog.base.get_state());
         recog.base.enter_rule(_localctx.clone(), 0, RULE_a);
         let mut _localctx: Rc<AContextAll> = _localctx;
-        let mut _la: isize;
-        let result: Result<(), ANTLRError> = try {
+        let mut _la: isize = -1;
+        let result: Result<(), ANTLRError> = (|| {
             let mut _alt: isize;
             //recog.base.enter_outer_alt(_localctx.clone(), 1);
             recog.base.enter_outer_alt(None, 1);
@@ -305,7 +333,7 @@ where
                             {
                                 recog.base.set_state(2);
                                 _la = recog.base.input.la(1);
-                                if { !(_la == ID || _la == ATN) } {
+                                if !(_la == ID || _la == ATN) {
                                     recog.err_handler.recover_inline(&mut recog.base)?;
                                 } else {
                                     if recog.base.input.la(1) == TOKEN_EOF {
@@ -344,7 +372,8 @@ where
                     )
                 });
             }
-        };
+            Ok(())
+        })();
         match result {
             Ok(_) => {}
             Err(e @ ANTLRError::FallThrough(_)) => return Err(e),
@@ -373,7 +402,7 @@ lazy_static! {
     };
 }
 
-const _serializedATN: &'static str =
+const _serializedATN: &str =
     "\x03\u{608b}\u{a72a}\u{8133}\u{b9ed}\u{417c}\u{3be7}\u{7786}\u{5964}\x03\
 	\x05\x10\x04\x02\x09\x02\x03\x02\x07\x02\x06\x0a\x02\x0c\x02\x0e\x02\x09\
 	\x0b\x02\x03\x02\x05\x02\x0c\x0a\x02\x03\x02\x03\x02\x03\x02\x02\x02\x03\
